@@ -1,5 +1,6 @@
 package com.example.tipunapi.controllers;
 
+import com.example.tipunapi.dto.SearchDTO;
 import com.example.tipunapi.models.Room;
 import com.example.tipunapi.services.room.RoomService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,9 +31,9 @@ public class RoomController {
         return roomService.getRoomById(id);
     }
 
-    @GetMapping("/{location}-{keyword}")
-    public List<Room> searchRoomByTitle(@PathVariable String location, @PathVariable String keyword){
-        return roomService.searchRoomByTitle(location, keyword);
+    @PostMapping("/search")
+    public List<Room> searchRoomByTitle(@RequestBody SearchDTO searchDTO){
+        return roomService.searchRoomByTitle(searchDTO.getKeyword(), searchDTO.getLocation());
     }
 
 }

@@ -1,5 +1,6 @@
 package com.example.tipunapi.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -44,15 +45,16 @@ public class Room {
     private String city;
 
 
-    @OneToMany
-    @JoinColumn(name = "room_id", referencedColumnName = "id")
+    @OneToMany(mappedBy = "room", fetch = FetchType.LAZY)
     private List<RoomImages> room_image;
 
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
+    @JsonIgnore
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User postUser;
 
+    @JsonIgnore
     @ManyToMany(mappedBy = "favoriteRooms")
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
@@ -62,6 +64,7 @@ public class Room {
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
 
+    @JsonIgnore
     @JoinTable(name = "room_utilities",
             joinColumns = @JoinColumn(name = "room_id"),
             inverseJoinColumns = @JoinColumn(name = "utilities_id")

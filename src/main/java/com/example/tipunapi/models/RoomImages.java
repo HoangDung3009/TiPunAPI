@@ -1,5 +1,6 @@
 package com.example.tipunapi.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -19,7 +20,8 @@ public class RoomImages implements Serializable {
 
     private String url;
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "room_id")
+    @JoinColumn(name = "room_id", referencedColumnName = "id")
     private Room room;
 }

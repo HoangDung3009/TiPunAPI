@@ -10,6 +10,6 @@ import java.util.List;
 @Repository
 public interface RoomRepository extends JpaRepository<Room, Long> {
     Room getRoomById(Long id);
-    @Query("FROM Room AS room WHERE room.title LIKE %?1% and room.city = ?2 ")
-    List<Room> searchRoomByTitle(String keyword, String location);
+    @Query("SELECT r from Room r where r.title like %?1% and r.district = ?2 ")
+    List<Room> findRoomsByTitle(String keyword, String location);
 }

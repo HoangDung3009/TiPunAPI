@@ -11,5 +11,6 @@ public interface RoomService {
     Room editRoom(Room room);
     ResponseEntity deleteRoom(Room room);
     Room getRoomById(Long id);
+
     List<Room> searchRoomByTitle(String keyword, String location);
 }

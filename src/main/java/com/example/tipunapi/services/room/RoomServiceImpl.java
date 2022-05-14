@@ -44,6 +44,6 @@ public class RoomServiceImpl implements RoomService{
 
     @Override
     public List<Room> searchRoomByTitle(String keyword, String location) {
-        return roomRepository.searchRoomByTitle(keyword, location);
+        return roomRepository.findRoomsByTitle(keyword, location);
     }
 }
