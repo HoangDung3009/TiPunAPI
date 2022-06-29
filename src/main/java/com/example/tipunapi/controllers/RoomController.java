@@ -4,7 +4,6 @@ import com.example.tipunapi.dto.SearchDTO;
 import com.example.tipunapi.models.Room;
 import com.example.tipunapi.services.room.RoomService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,13 +16,14 @@ public class RoomController {
     private RoomService roomService;
 
     @GetMapping("")
-    public List<Room> getAllRooms(){
-        return roomService.getAllRooms();
+    public List<Room> getAllRooms(@RequestParam Long user_id){
+        return roomService.getAllRooms(user_id);
     }
 
-    @PostMapping("/add")
-    public Room addRoom(@Validated @RequestBody Room room){
-        return roomService.addRoom(room);
+    @PostMapping("/add/{id}")
+    public Room addRoom(@RequestBody Room room, @PathVariable Long id)
+    {
+        return roomService.addRoom(room, id);
     }
 
     @GetMapping("/{id}")
@@ -34,6 +34,16 @@ public class RoomController {
     @PostMapping("/search")
     public List<Room> searchRoomByTitle(@RequestBody SearchDTO searchDTO){
         return roomService.searchRoomByTitle(searchDTO.getKeyword(), searchDTO.getLocation());
+    }
+
+    @PutMapping("/update")
+    public Room updateRoom(@RequestBody Room room){
+        return roomService.editRoom(room);
+    }
+
+    @GetMapping("/user")
+    public List<Room> getRoomByUser(@RequestParam Long user_id){
+        return roomService.getRoomByUser(user_id);
     }
 
 }

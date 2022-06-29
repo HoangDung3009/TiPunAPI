@@ -1,7 +1,9 @@
 package com.example.tipunapi.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 
 import javax.persistence.*;
@@ -16,6 +18,7 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 @Data
+@Builder
 @Table(name = "user")
 public class User implements Serializable {
     @Id
@@ -38,12 +41,11 @@ public class User implements Serializable {
     private String email;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "postUser", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "postUser",cascade = CascadeType.ALL)
     private List<Room> postedRooms;
 
-
-    @JsonIgnore
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+//    @JsonIgnore
+    @ManyToMany
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     @JoinTable(name = "favorite_room",

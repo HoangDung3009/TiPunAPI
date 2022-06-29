@@ -4,24 +4,32 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
-import java.io.Serializable;
+import java.util.Date;
 
-@Entity
-@Getter
-@Setter
 @Data
+@Entity
+@Setter
+@Getter
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "room_image")
-public class RoomImages implements Serializable {
+@Table(name = "bill")
+public class Bill {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private String createDate;
 
-    private String url;
+    @JsonIgnore
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User billUser;
 
     @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "room_id")
     private Room room;
+    @JsonIgnore
+    @ManyToOne
+    @JoinColumn(name = "payment_id")
+    private Payment payment;
 }

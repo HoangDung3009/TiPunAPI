@@ -4,6 +4,7 @@ import com.example.tipunapi.dto.UserLoginDTO;
 import com.example.tipunapi.models.User;
 import com.example.tipunapi.services.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -39,7 +40,18 @@ public class UserController {
         return userService.findUserById(id);
     }
 
+    @PutMapping("/favorite")
+    public User favoriteRoom(@RequestBody User user){
+        return userService.favorite(user);
+    }
 
+    @PutMapping("/update")
+    public User updateUser(@RequestBody User user){
+        return userService.updateUser(user);
+    }
 
-
+    @PostMapping("/auth/google")
+    public ResponseEntity<User> googleLogin(@RequestBody String googleToken){
+        return userService.googleLogin(googleToken);
+    }
 }
